@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>springcloud-day3 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="SpringCloud - Day3Hystrix的客户端弹性模式 断路器模式杀死运行缓慢和退化的系统调用，调用快速失败，防止资源枯竭 回退模式调用失败或调用的断路器失败时定义的替代代码路径 舱壁模式调用隔离在自己的线程池，防止吞噬所有资源  项目搭建 新建maven项目spmia-chapter5添加maven依赖（cloud2020已移除hystrix）12345678910111213141">
+<meta property="og:type" content="article">
+<meta property="og:title" content="springcloud-day3">
+<meta property="og:url" content="http://example.com/2022/01/21/springcloud-day3/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="SpringCloud - Day3Hystrix的客户端弹性模式 断路器模式杀死运行缓慢和退化的系统调用，调用快速失败，防止资源枯竭 回退模式调用失败或调用的断路器失败时定义的替代代码路径 舱壁模式调用隔离在自己的线程池，防止吞噬所有资源  项目搭建 新建maven项目spmia-chapter5添加maven依赖（cloud2020已移除hystrix）12345678910111213141">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-01-21T14:42:36.000Z">
+<meta property="article:modified_time" content="2022-01-22T12:13:08.813Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-springcloud-day3" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/01/21/springcloud-day3/" class="article-date">
+  <time class="dt-published" datetime="2022-01-21T14:42:36.000Z" itemprop="datePublished">2022-01-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      springcloud-day3
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="SpringCloud-Day3"><a href="#SpringCloud-Day3" class="headerlink" title="SpringCloud - Day3"></a>SpringCloud - Day3</h1><h3 id="Hystrix的客户端弹性模式"><a href="#Hystrix的客户端弹性模式" class="headerlink" title="Hystrix的客户端弹性模式"></a>Hystrix的客户端弹性模式</h3><ol>
+<li>断路器模式<br>杀死运行缓慢和退化的系统调用，调用快速失败，防止资源枯竭</li>
+<li>回退模式<br>调用失败或调用的断路器失败时定义的替代代码路径</li>
+<li>舱壁模式<br>调用隔离在自己的线程池，防止吞噬所有资源</li>
+</ol>
+<h3 id="项目搭建"><a href="#项目搭建" class="headerlink" title="项目搭建"></a>项目搭建</h3><ol>
+<li>新建maven项目spmia-chapter5<br>添加maven依赖（cloud2020已移除hystrix）<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;parent&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;2.3.0.RELEASE&lt;/version&gt;</span><br><span class="line">&lt;/parent&gt;</span><br><span class="line"></span><br><span class="line">&lt;dependencyManagement&gt;</span><br><span class="line">    &lt;dependencies&gt;</span><br><span class="line">        &lt;dependency&gt;</span><br><span class="line">            &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">            &lt;artifactId&gt;spring-cloud-dependencies&lt;/artifactId&gt;</span><br><span class="line">            &lt;version&gt;Hoxton.SR5&lt;/version&gt;</span><br><span class="line">            &lt;type&gt;pom&lt;/type&gt;</span><br><span class="line">            &lt;scope&gt;import&lt;/scope&gt;</span><br><span class="line">        &lt;/dependency&gt;</span><br><span class="line">    &lt;/dependencies&gt;</span><br><span class="line">&lt;/dependencyManagement&gt;</span><br></pre></td></tr></table></figure></li>
+<li>在spima-chapter5下创建子模块confsvr<br>添加maven依赖<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependencies&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-cloud-starter-config&lt;/artifactId&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-cloud-config-server&lt;/artifactId&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line">&lt;/dependencies&gt;</span><br></pre></td></tr></table></figure>
+bootstrap.yml配置（encrypt一定要配置在此，否则会使加密失效）<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">spring:</span><br><span class="line">  application:</span><br><span class="line">    name: configserver</span><br><span class="line">  cloud:</span><br><span class="line">    config:</span><br><span class="line">      server:</span><br><span class="line">        encrypt:</span><br><span class="line">          enabled: false</span><br><span class="line">encrypt:</span><br><span class="line">  key: secret</span><br></pre></td></tr></table></figure>
+application.yml配置<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">server:</span><br><span class="line">  port: 8888</span><br><span class="line">spring:</span><br><span class="line">  profiles:</span><br><span class="line">    active: native</span><br><span class="line">  cloud:</span><br><span class="line">    config:</span><br><span class="line">      server:</span><br><span class="line">        native:</span><br><span class="line">          search-locations: classpath:config/licensingservice, classpath:config/organizationservice</span><br></pre></td></tr></table></figure></li>
+<li>在spima-chapter3下创建子模块licensing-service<br>添加maven依赖（Hoxton.SR5版本无需添加bootstrap依赖）<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependencies&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-cloud-starter-config&lt;/artifactId&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-cloud-config-client&lt;/artifactId&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-cloud-starter-netflix-hystrix&lt;/artifactId&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line">    ...</span><br><span class="line">&lt;/dependencies&gt;</span><br></pre></td></tr></table></figure></li>
+<li>在licensing-service的Application中添加注解 <code>@EnableCircuitBreaker</code> 开始断路器模式</li>
+</ol>
+<ul>
+<li>断路器模式<br>在指定方法上添加hystrix注解，断路器默认超时为1s，超过则调用失败<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@HystrixCommand(</span><br><span class="line">        commandProperties = &#123;</span><br><span class="line">                // 设置超时</span><br><span class="line">                @HystrixProperty(name = &quot;execution.isolation.thread.timeoutInMilliseconds&quot;, value = &quot;12000&quot;)</span><br><span class="line">        &#125;</span><br><span class="line">)</span><br><span class="line">public List&lt;License&gt; getLicensesByOrg(String organizationId) &#123;</span><br><span class="line">    randomlyRunLong();</span><br><span class="line">    return licenseRepository.findByOrganizationId(organizationId);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>回退模式<br>在指定方法上添加hystrix注解，并添加回退方法<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">@HystrixCommand(</span><br><span class="line">        // 设置回退</span><br><span class="line">        fallbackMethod = &quot;buildFallbackLicenseList&quot;,</span><br><span class="line">)</span><br><span class="line">public List&lt;License&gt; getLicensesByOrg(String organizationId) &#123;</span><br><span class="line">    randomlyRunLong();</span><br><span class="line">    return licenseRepository.findByOrganizationId(organizationId);</span><br><span class="line">&#125;</span><br><span class="line">// 回退</span><br><span class="line">private List&lt;License&gt; buildFallbackLicenseList(String organizationId) &#123;</span><br><span class="line">    List&lt;License&gt; fallbackList = new ArrayList&lt;&gt;();</span><br><span class="line">    License license = new License()</span><br><span class="line">            .withId(&quot;0000000-00-00000&quot;)</span><br><span class="line">            .withOrganizationId( organizationId )</span><br><span class="line">            .withProductName(&quot;Sorry no licensing information currently available&quot;);</span><br><span class="line"></span><br><span class="line">    fallbackList.add(license);</span><br><span class="line">    return fallbackList;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>舱壁模式（在自己的线程池中隔离远程资源调用，防止性能不好的服务导致容器崩溃）<br>在指定方法上添加hystrix注解<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">@HystrixCommand(</span><br><span class="line">        // 线程池名称</span><br><span class="line">        threadPoolKey = &quot;licenseByOrgThreadPool&quot;,</span><br><span class="line">        threadPoolProperties = &#123;</span><br><span class="line">                // 核心线程数</span><br><span class="line">                @HystrixProperty(name = &quot;coreSize&quot;, value = &quot;30&quot;),</span><br><span class="line">                // 请求队列</span><br><span class="line">                @HystrixProperty(name = &quot;maxQueueSize&quot;, value = &quot;10&quot;)</span><br><span class="line">        &#125;</span><br><span class="line">)</span><br><span class="line">public List&lt;License&gt; getLicensesByOrg(String organizationId) &#123;</span><br><span class="line">    randomlyRunLong();</span><br><span class="line">    return licenseRepository.findByOrganizationId(organizationId);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/01/21/springcloud-day3/" data-id="ckyptvrbg0001fkvsa29172py" data-title="springcloud-day3" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2022/01/11/springcloud-day2/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">springcloud-day2</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">January 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/01/21/springcloud-day3/">springcloud-day3</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/11/springcloud-day2/">springcloud-day2</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/07/springcloud-day1-1/">springcloud-day1_1</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/07/springcloud-day1/">springcloud-day1</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/04/post20220104/">post20220104</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
