@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>springcloud-day5 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="SpringCloud - Day5微服务安全 在spmia-chapter7下创建子模块authentication-service添加maven依赖 123456789101112&lt;dependencies&gt;    ...    &lt;dependency&gt;        &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId">
+<meta property="og:type" content="article">
+<meta property="og:title" content="springcloud-day5">
+<meta property="og:url" content="http://example.com/2022/01/29/springcloud-day5/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="SpringCloud - Day5微服务安全 在spmia-chapter7下创建子模块authentication-service添加maven依赖 123456789101112&lt;dependencies&gt;    ...    &lt;dependency&gt;        &lt;groupId&gt;org.springframework.boot&lt;&#x2F;groupId">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-01-29T02:23:42.000Z">
+<meta property="article:modified_time" content="2022-01-29T03:05:16.538Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.0.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-springcloud-day5" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/01/29/springcloud-day5/" class="article-date">
+  <time class="dt-published" datetime="2022-01-29T02:23:42.000Z" itemprop="datePublished">2022-01-29</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      springcloud-day5
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="SpringCloud-Day5"><a href="#SpringCloud-Day5" class="headerlink" title="SpringCloud - Day5"></a>SpringCloud - Day5</h1><h3 id="微服务安全"><a href="#微服务安全" class="headerlink" title="微服务安全"></a>微服务安全</h3><ol>
+<li><p>在spmia-chapter7下创建子模块authentication-service<br>添加maven依赖</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependencies&gt;</span><br><span class="line">    ...</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;spring-cloud-starter-oauth2&lt;/artifactId&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line">&lt;/dependencies&gt;</span><br></pre></td></tr></table></figure>
+<p>application.yml配置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">server:</span><br><span class="line">  port: 8901</span><br><span class="line">  servlet:</span><br><span class="line">    context-path: /auth</span><br></pre></td></tr></table></figure>
+<p>在入口Application上添加注解 <code>@EnableAuthorizationServer</code> 和 <code>@EnableResourceServer</code> 开启认证服务和资源服务<br>基本security配置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">@Configuration</span><br><span class="line">public class WebSecurityConfig extends WebSecurityConfigurerAdapter &#123;</span><br><span class="line">    @Bean</span><br><span class="line">    @Override</span><br><span class="line">    public AuthenticationManager authenticationManagerBean() throws Exception &#123;</span><br><span class="line">        return super.authenticationManagerBean();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Bean</span><br><span class="line">    public PasswordEncoder passwordEncoder() &#123;</span><br><span class="line">        return NoOpPasswordEncoder.getInstance();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    protected void configure(AuthenticationManagerBuilder auth) throws Exception &#123;</span><br><span class="line">        auth.inMemoryAuthentication()</span><br><span class="line">                .withUser(&quot;strr&quot;).password(&quot;password&quot;).roles(&quot;USER&quot;)</span><br><span class="line">                .and()</span><br><span class="line">                .withUser(&quot;admin&quot;).password(&quot;password&quot;).roles(&quot;USER&quot;, &quot;ADMIN&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>基本oauth2配置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">@Configuration</span><br><span class="line">public class OAuth2Config extends AuthorizationServerConfigurerAdapter &#123;</span><br><span class="line">    private static final String CLIENT = &quot;eagleeye&quot;;</span><br><span class="line">    private static final String SECRET = &quot;thisissecret&quot;;</span><br><span class="line">    private static final String[] GRANT_TYPES = new String[] &#123;&quot;refresh_token&quot;, &quot;password&quot;, &quot;client_credentials&quot;&#125;;</span><br><span class="line">    private static final String[] SCOPES = new String[] &#123;&quot;webclient&quot;, &quot;mobileclient&quot;&#125;;</span><br><span class="line"></span><br><span class="line">    private final AuthenticationManager authenticationManager;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    public OAuth2Config(AuthenticationManager authenticationManager) &#123;</span><br><span class="line">        this.authenticationManager = authenticationManager;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void configure(ClientDetailsServiceConfigurer clients) throws Exception &#123;</span><br><span class="line">        clients.inMemory()</span><br><span class="line">                .withClient(CLIENT)</span><br><span class="line">                .secret(SECRET)</span><br><span class="line">                .authorizedGrantTypes(GRANT_TYPES)</span><br><span class="line">                .scopes(SCOPES);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception &#123;</span><br><span class="line">        endpoints.authenticationManager(authenticationManager);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>认证需传递client_id、client_secret、grant_type、username、password、scope（非必填）参数，client_id和client_secret可以通过认证的方式传递也可以通过url传递，认证成功返回token，后续请求就可以在表头添加认证token_type + access_token进行访问</p>
+</li>
+<li><p>其他子模块认证<br>在authentication-service开放接口（返回一个map，用于后续user-info-uri）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">@RestController</span><br><span class="line">@RequestMapping(&quot;/user&quot;)</span><br><span class="line">public class AuthController &#123;</span><br><span class="line">    @RequestMapping(produces = &quot;application/json&quot;)</span><br><span class="line">    public Map&lt;String, Object&gt; user(OAuth2Authentication user) &#123;</span><br><span class="line">        Map&lt;String, Object&gt; userInfo = new HashMap&lt;&gt;();</span><br><span class="line">        userInfo.put(&quot;user&quot;, user.getUserAuthentication().getPrincipal());</span><br><span class="line">        userInfo.put(&quot;authorities&quot;, user.getUserAuthentication().getAuthorities());</span><br><span class="line">        return userInfo;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在子模块（organization-service）添加maven依赖</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependencies&gt;</span><br><span class="line">  ...</span><br><span class="line">  &lt;dependency&gt;</span><br><span class="line">      &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">      &lt;artifactId&gt;spring-cloud-starter-oauth2&lt;/artifactId&gt;</span><br><span class="line">  &lt;/dependency&gt;</span><br><span class="line">&lt;/dependencies&gt;</span><br></pre></td></tr></table></figure>
+<p>修改子模块（organization-service）的application.yml</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">security:</span><br><span class="line">  oauth2:</span><br><span class="line">    resource:</span><br><span class="line">      user-info-uri: http://localhost:8901/auth/user</span><br></pre></td></tr></table></figure>
+<p>子模块（organization-service）的入口添加依赖 <code>@EnableResourceServer</code> 开启资源服务<br>子模块（organization-service）添加资源服务配置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@Configuration</span><br><span class="line">public class ResourceServerConfig extends ResourceServerConfigurerAdapter &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void configure(HttpSecurity http) throws Exception &#123;</span><br><span class="line">        http.authorizeRequests()</span><br><span class="line">                .antMatchers(HttpMethod.DELETE, &quot;/v1/organizations/**&quot;).hasAnyRole(&quot;ADMIN&quot;)</span><br><span class="line">                .anyRequest().authenticated();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>配置完成后，子模块的请求需带上token进行验证，user-info-uri配置定回调的URL，用于子模块的回调配置</p>
+</li>
+<li><p>JWT令牌配置</p>
+</li>
+</ol>
+<ul>
+<li>认证服务<br>令牌增强（用于添加额外信息）<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public class JWTTokenEnhancer implements TokenEnhancer &#123;</span><br><span class="line">    private String getOrgId(String userName) &#123;</span><br><span class="line">        return String.format(&quot;%s-Organization&quot;, userName);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public OAuth2AccessToken enhance(OAuth2AccessToken oAuth2AccessToken, OAuth2Authentication oAuth2Authentication) &#123;</span><br><span class="line">        // 附加信息</span><br><span class="line">        Map&lt;String, Object&gt; additionalInfo = new HashMap&lt;&gt;();</span><br><span class="line">        additionalInfo.put(&quot;organizationId&quot;, getOrgId(oAuth2Authentication.getName()));</span><br><span class="line">        ((DefaultOAuth2AccessToken)oAuth2AccessToken).setAdditionalInformation(additionalInfo);</span><br><span class="line">        return oAuth2AccessToken;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+基本JWT配置<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">@Configuration</span><br><span class="line">public class JWTTokenStoreConfig &#123;</span><br><span class="line">    private final ServiceConfig serviceConfig;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    public JWTTokenStoreConfig(ServiceConfig serviceConfig) &#123;</span><br><span class="line">        this.serviceConfig = serviceConfig;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Bean</span><br><span class="line">    public TokenStore tokenStore() &#123;</span><br><span class="line">        return new JwtTokenStore(jwtAccessTokenConverter());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 令牌数据</span><br><span class="line">    @Bean</span><br><span class="line">    @Primary</span><br><span class="line">    public DefaultTokenServices tokenServices() &#123;</span><br><span class="line">        DefaultTokenServices defaultTokenServices = new DefaultTokenServices();</span><br><span class="line">        defaultTokenServices.setTokenStore(tokenStore());</span><br><span class="line">        defaultTokenServices.setSupportRefreshToken(true);</span><br><span class="line">        return defaultTokenServices;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // JWT转换器</span><br><span class="line">    @Bean</span><br><span class="line">    public JwtAccessTokenConverter jwtAccessTokenConverter() &#123;</span><br><span class="line">        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();</span><br><span class="line">        converter.setSigningKey(serviceConfig.getJwtSigningKey());  // 密钥</span><br><span class="line">        return converter;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // JWT令牌增强</span><br><span class="line">    @Bean</span><br><span class="line">    public TokenEnhancer jwtTokenEnhancer() &#123;</span><br><span class="line">        return new JWTTokenEnhancer();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+oauth2配置<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">@Configuration</span><br><span class="line">public class JWTOAuth2Config extends AuthorizationServerConfigurerAdapter &#123;</span><br><span class="line">    private static final String CLIENT = &quot;eagleeye&quot;;</span><br><span class="line">    private static final String SECRET = &quot;thisissecret&quot;;</span><br><span class="line">    private static final String[] GRANT_TYPES = new String[] &#123;&quot;refresh_token&quot;, &quot;password&quot;, &quot;client_credentials&quot;&#125;;</span><br><span class="line">    private static final String[] SCOPES = new String[] &#123;&quot;webclient&quot;, &quot;mobileclient&quot;&#125;;</span><br><span class="line"></span><br><span class="line">    private final AuthenticationManager authenticationManager;</span><br><span class="line"></span><br><span class="line">    private final TokenStore tokenStore;</span><br><span class="line"></span><br><span class="line">    private final JwtAccessTokenConverter jwtAccessTokenConverter;</span><br><span class="line"></span><br><span class="line">    private final TokenEnhancer jwtTokenEnhancer;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    public JWTOAuth2Config(AuthenticationManager authenticationManager, TokenStore tokenStore, JwtAccessTokenConverter jwtAccessTokenConverter, TokenEnhancer jwtTokenEnhancer) &#123;</span><br><span class="line">        this.authenticationManager = authenticationManager;</span><br><span class="line">        this.tokenStore = tokenStore;</span><br><span class="line">        this.jwtAccessTokenConverter = jwtAccessTokenConverter;</span><br><span class="line">        this.jwtTokenEnhancer = jwtTokenEnhancer;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void configure(ClientDetailsServiceConfigurer clients) throws Exception &#123;</span><br><span class="line">        clients.inMemory()</span><br><span class="line">                .withClient(CLIENT)</span><br><span class="line">                .secret(SECRET)</span><br><span class="line">                .authorizedGrantTypes(GRANT_TYPES)</span><br><span class="line">                .scopes(SCOPES);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception &#123;</span><br><span class="line">        TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();</span><br><span class="line">        tokenEnhancerChain.setTokenEnhancers(Arrays.asList(jwtTokenEnhancer, jwtAccessTokenConverter));</span><br><span class="line"></span><br><span class="line">        endpoints.tokenStore(tokenStore)</span><br><span class="line">                .accessTokenConverter(jwtAccessTokenConverter)</span><br><span class="line">                .tokenEnhancer(tokenEnhancerChain)</span><br><span class="line">                .authenticationManager(authenticationManager);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+配置完成后返回的token就是JWT形式的</li>
+<li>资源服务<br>添加基本JWT配置（如上述）即可，无需配置令牌增强（只用于生成令牌）<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">@Configuration</span><br><span class="line">public class JWTTokenStoreConfig &#123;</span><br><span class="line">    private final ServiceConfig serviceConfig;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    public JWTTokenStoreConfig(ServiceConfig serviceConfig) &#123;</span><br><span class="line">        this.serviceConfig = serviceConfig;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Bean</span><br><span class="line">    public TokenStore tokenStore() &#123;</span><br><span class="line">        return new JwtTokenStore(jwtAccessTokenConverter());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 令牌数据</span><br><span class="line">    @Bean</span><br><span class="line">    @Primary</span><br><span class="line">    public DefaultTokenServices defaultTokenServices() &#123;</span><br><span class="line">        DefaultTokenServices defaultTokenServices = new DefaultTokenServices();</span><br><span class="line">        defaultTokenServices.setTokenStore(tokenStore());</span><br><span class="line">        defaultTokenServices.setSupportRefreshToken(true);</span><br><span class="line">        return defaultTokenServices;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // JWT转换器</span><br><span class="line">    @Bean</span><br><span class="line">    public JwtAccessTokenConverter jwtAccessTokenConverter() &#123;</span><br><span class="line">        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();</span><br><span class="line">        converter.setSigningKey(serviceConfig.getJwtSigningKey());</span><br><span class="line">        return converter;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/01/29/springcloud-day5/" data-id="ckz2biy330001agvs26ytawg0" data-title="springcloud-day5" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/01/31/springcloud-day6/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          springcloud-day6
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/01/22/springcloud-day4/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">springcloud-day4</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">January 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/01/31/springcloud-day7/">springcloud-day7</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/31/springcloud-day6/">springcloud-day6</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/29/springcloud-day5/">springcloud-day5</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/22/springcloud-day4/">springcloud-day4</a>
+          </li>
+        
+          <li>
+            <a href="/2022/01/21/springcloud-day3/">springcloud-day3</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
